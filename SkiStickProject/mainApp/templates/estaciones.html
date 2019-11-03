@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Todas las estaciones</title>
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    {% include "header.html" %}
+    <h1>Todas las estaciones</h1>
+    <div class="container mt-4 ">
+        {% for estacion in todasEstaciones %}
+        <div class="col-4 card-deck text-center">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4>{{ estacion.nombre }}</h4>
+                </div>
+                <div class="card-body">
+                    <p>De <b>{{ estacion.kmsPista }}</b></p>
+                    <p>Su identificafor es <b>{{ estacion.numeroRemontes }}</b></p>
+                    <p>Es un <b>{{ estacion.alturaMaxima }}</b>
+                        del tema <b>{{ estacion.alturaMinima }}</b></p>
+                    <p>La qualidad de la pelicula es <b>{{ estacion.nombre }}</b></p>
+                    <button type="button" class="col-sm mr-2 btn btn btn-block btn-primary">Modificar</button>
+                    <button type="button" class="col-sm mr-2 btn btn btn-block btn-danger">Borrar</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
