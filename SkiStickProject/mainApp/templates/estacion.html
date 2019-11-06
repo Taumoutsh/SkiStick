@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Todas las estaciones</title>
+    <title>{{ estacion.nombre }}</title>
     <meta charset="utf-8">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     {% include "header.html" %}
-        <h1 class="jumbotron">Todas las estaciones</h1>
+        <h1 class="jumbotron">{{ estacion.nombre }}</h1>
     <div class="container mt-4 ">
-        {% for estacion in estactiones %}
-        <div class="col-4 card-deck text-center">
+        <div class="col-sm card-deck text-center">
             <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                    <h4>{{ estacion.nombre }}</h4>
-                </div>
                 <div class="card-body">
+                    <p>La estacion tiene <b>{{ estacion.kmsPista }}</b> kilometros de pista</p>
+                    <p>Tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecanica</p>
+                    <p>La altura minima es <b>{{ estacion.alturaMinima }}</b> metros y
+                       la altura maxima es <b>{{ estacion.alturaMaxima }}</b> metros</p>
                     <p>La estacion est situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
-                    {% load static %}
-                    <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
-                    <a href="{% url 'estacion' estacion.id %}">Consultar</a>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
 </body>
 </html>

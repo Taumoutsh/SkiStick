@@ -8,6 +8,7 @@ class Estacion(models.Model):
    numeroRemontes = models.IntegerField()
    alturaMaxima = models.IntegerField()
    alturaMinima = models.IntegerField()
+   imagen = models.CharField(max_length=255)
 
    localizacion = models.ForeignKey('Localizacion', on_delete=models.CASCADE)
 
