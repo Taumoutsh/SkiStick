@@ -40,6 +40,6 @@ class EstacionToTipoPista(models.Model):
    estacion = models.ForeignKey('Estacion', on_delete=models.CASCADE)
 
    def __str__(self):
-      return self.mensaje
+      return "Oui"
 
 

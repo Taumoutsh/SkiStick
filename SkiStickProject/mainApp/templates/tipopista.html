@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load mainApp_extras %}
+<html lang="en">
+<head>
+    <title>Todas las estaciones</title>
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    {% include "header.html" %}
+        <h1 class="jumbotron">El nivél {{ tipoPista.mensaje }}</h1>
+    <div class="container mt-4 ">
+        <h4>Detalles del nivél :</h4>
+        <p class="mb-4">{{ tipoPista.detalles }}</p>
+        <h4 class="mb-4">Ver los estaciones de este localizacion :</h4>
+        {% for anEstacion in estacionToTipoPista %}
+        {% ifequal forloop.counter|modulo:3 1 %}
+        <div class="row justify-content-center">
+            {% endifequal %}
+            <div class="col-4 card-deck text-center">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4>{{ anEstacion.estacion.nombre }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>La estacion es situada en : <b>{{ anEstacion.estacion.localizacion.mensaje }}</b></p>
+                        {% load static %}
+                        <img src="{% static anEstacion.estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
+                        <a href="{% url 'estacion' anEstacion.estacion.id %}">Consultar</a>
+                    </div>
+                </div>
+            </div>
+            {% ifequal forloop.counter|modulo:3 0 %}
+        </div>
+        {% endifequal %}
+        {% endfor %}
+    </div>
+</body>
+</html>

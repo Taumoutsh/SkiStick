@@ -17,6 +17,12 @@
                     <p>La altura minima es <b>{{ estacion.alturaMinima }}</b> metros y
                        la altura maxima es <b>{{ estacion.alturaMaxima }}</b> metros</p>
                     <p>La estacion est situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
+                    <p><b>Numero de pista con su difficultad :</b></p>
+                    {% for estacion in estacionToTipoPista %}
+                        <p>Hay <b>{{ estacion.numeroPistas }}</b> pistas de tipo <b>{{ estacion.tipoPista.mensaje }}</b> ({{ estacion.tipoPista.detalles }})</p>
+                    {% endfor %}
+                    {% load static %}
+                    <img src="{% static estacion.imagen %}" alt="Mon image" class="img-thumbnail" />
                 </div>
             </div>
         </div>
