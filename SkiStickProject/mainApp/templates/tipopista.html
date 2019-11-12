@@ -10,8 +10,8 @@
     {% include "header.html" %}
         <h1 class="jumbotron">El nivél {{ tipoPista.mensaje }}</h1>
     <div class="container mt-4 ">
-        <h4>Detalles del nivél :</h4>
-        <p class="mb-4">{{ tipoPista.detalles }}</p>
+        <h4 class="mb-4">Detalles del nivél :</h4>
+        <p class="mb-4"><i class="fas fa-skiing"></i> {{ tipoPista.detalles }}</p>
         <h4 class="mb-4">Ver los estaciones de este localizacion :</h4>
         {% for anEstacion in estacionToTipoPista %}
         {% ifequal forloop.counter|modulo:3 1 %}

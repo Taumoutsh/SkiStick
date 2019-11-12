@@ -7,6 +7,65 @@
 	</head>
 	<body>
         {% include "header.html" %}
-        <h1 class="jumbotron">Welcome on SkiStick !</h1>
+        <h1 class="jumbotron">Todas las localizaciones</h1>
+		<div class="container mt-4 ">
+			<h2 class="mb-4">Las estaciones con el mas numero de pistas :</h2>
+			<div class="row justify-content-center">
+			{% for estacion in estacionesPorPistas %}
+                <div class="col-4 card-deck text-center">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4>{{ estacion.nombre }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
+							<p>La estacion tiene <b>{{ estacion.kmsPista }} kms</b> de pista</p>
+                            {% load static %}
+                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
+                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                        </div>
+                    </div>
+                </div>
+			{% endfor %}
+			</div>
+			<h2 class="mb-4">Las estaciones con el mas numero de remontes :</h2>
+			<div class="row justify-content-center">
+			{% for estacion in estacionesPorRemontes %}
+                <div class="col-4 card-deck text-center">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4>{{ estacion.nombre }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
+                            <p>La estacion tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecanicas</p>
+                            {% load static %}
+                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
+                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                        </div>
+                    </div>
+                </div>
+			{% endfor %}
+			</div>
+			<h2 class="mb-4">Las estaciones los mas altas :</h2>
+			<div class="row justify-content-center">
+			{% for estacion in estacionesPorAltura %}
+                <div class="col-4 card-deck text-center">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4>{{ estacion.nombre }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
+                            <p>La estacion tiene <b>{{ estacion.alturaMaxima }} metros</b> de altura al maxima</p>
+                            {% load static %}
+                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
+                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                        </div>
+                    </div>
+                </div>
+			{% endfor %}
+			</div>
+		</div>
     </body>
 </html>

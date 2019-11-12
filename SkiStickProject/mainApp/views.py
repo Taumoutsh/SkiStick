@@ -6,7 +6,12 @@ from django.http import request, response
 # Create your views here.
 
 def home(request):
-    return render(request, 'index.html')
+    # Le - devant kmsPista signifie descendant, ne rien mettre signifie ascendant
+    estacionesPorPistas = Estacion.objects.order_by('-kmsPista')[:3]
+    estacionesPorRemontes = Estacion.objects.order_by('-numeroRemontes')[:3]
+    estacionesPorAltura = Estacion.objects.order_by('-alturaMaxima')[:3]
+
+    return render(request, 'index.html', {'estacionesPorPistas':estacionesPorPistas, 'estacionesPorRemontes':estacionesPorRemontes, 'estacionesPorAltura':estacionesPorAltura})
 
 def estaciones(request):
     estaciones = Estacion.objects.all()
@@ -35,4 +40,3 @@ def tipopista(request, id_tipoPista):
     tipoPista = TipoPista.objects.get(id=id_tipoPista)
     estacionToTipoPista = EstacionToTipoPista.objects.filter(tipoPista_id=id_tipoPista)
     return render(request, 'tipopista.html', {'tipoPista':tipoPista, 'estacionToTipoPista':estacionToTipoPista})
-

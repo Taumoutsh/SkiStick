@@ -9,20 +9,23 @@
     {% include "header.html" %}
         <h1 class="jumbotron">{{ estacion.nombre }}</h1>
     <div class="container mt-4 ">
-        <div class="col-sm card-deck text-center">
+        <div class="col-sm card-deck">
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
-                    <p>La estacion tiene <b>{{ estacion.kmsPista }}</b> kilometros de pista</p>
-                    <p>Tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecanica</p>
-                    <p>La altura minima es <b>{{ estacion.alturaMinima }}</b> metros y
-                       la altura maxima es <b>{{ estacion.alturaMaxima }}</b> metros</p>
-                    <p>La estacion est situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
-                    <p><b>Numero de pista con su difficultad :</b></p>
+                    <h4 class="mb-3">Detalles de la estacion :</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item"><i class="fas fa-skiing"></i> La estacion tiene <b>{{ estacion.kmsPista }}</b> kilometros de pista</li>
+                        <li class="list-group-item"><i class="fas fa-tram"></i> Tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecanica</li>
+                        <li class="list-group-item"><i class="fas fa-mountain"></i> La altura minima es <b>{{ estacion.alturaMinima }}</b> metros y
+                       la altura maxima es <b>{{ estacion.alturaMaxima }}</b> metros</li>
+                        <li class="list-group-item"><i class="fas fa-map-marker-alt"></i> La estacion est situada en : <b>{{ estacion.localizacion.mensaje }}</b></li>
+                        <li class="list-group-item"><b>Numero de pista con su difficultad :</b></li>
                     {% for estacion in estacionToTipoPista %}
-                        <p>Hay <b>{{ estacion.numeroPistas }}</b> pistas de tipo <b>{{ estacion.tipoPista.mensaje }}</b> ({{ estacion.tipoPista.detalles }})</p>
+                        <li class="list-group-item"><i class="far fa-dot-circle"></i> Hay <b>{{ estacion.numeroPistas }}</b> pistas de tipo <b>{{ estacion.tipoPista.mensaje }}</b> ({{ estacion.tipoPista.detalles }})</li>
                     {% endfor %}
+                    </ul>
                     {% load static %}
-                    <img src="{% static estacion.imagen %}" alt="Mon image" class="img-thumbnail" />
+                        <img src="{% static estacion.imagen %}" alt="Mon image" class="img-thumbnail" />
                 </div>
             </div>
         </div>
