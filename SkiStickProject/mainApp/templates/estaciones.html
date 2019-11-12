@@ -24,8 +24,7 @@
                         <div class="card-body">
                             <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
                             {% load static %}
-                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
-                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                            <a href="{% url 'estacion' estacion.id %}"><img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" /></a>
                         </div>
                     </div>
                 </div>
