@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>SkiStick - Main page</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	</head>
-	<body>
-        {% include "header.html" %}
-        <h1 class="jumbotron">Todas las localizaciones</h1>
+ {% include "header.html" %}
+        <h1 class="jumbotron">¡ Bienvenido en Ski <i class="fas fa-snowflake"></i> Stick !</h1>
 		<div class="container mt-4 ">
+            <h2>Que es Ski <i class="fas fa-snowflake"></i> Stick ?</h2>
+            <p>Ski <i class="fas fa-snowflake"></i> Stick es un sitio web que presenta un montón de estaciones de esquí. En efecto, un amplio panel de estaciones de todas las cadenas montañosas francesas está disponible.</p>
+            <p><b>¡ Gracias a Ski <i class="fas fa-snowflake"></i> Stick, descubre la estación que hará de tu próximo invierno una experiencia inolvidable !</b></p>
 			<h2 class="mb-4">Las estaciones con el mas numero de pistas :</h2>
 			<div class="row justify-content-center">
 			{% for estacion in estacionesPorPistas %}
@@ -21,13 +16,15 @@
                             <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
 							<p>La estacion tiene <b>{{ estacion.kmsPista }} kms</b> de pista</p>
                             {% load static %}
-                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
-                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                            <a href="{% url 'estacion' estacion.id %}"><img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" /></a>
                         </div>
                     </div>
                 </div>
 			{% endfor %}
 			</div>
+
+            <hr>
+
 			<h2 class="mb-4">Las estaciones con el mas numero de remontes :</h2>
 			<div class="row justify-content-center">
 			{% for estacion in estacionesPorRemontes %}
@@ -40,13 +37,15 @@
                             <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
                             <p>La estacion tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecanicas</p>
                             {% load static %}
-                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
-                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                            <a href="{% url 'estacion' estacion.id %}"><img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" /></a>
                         </div>
                     </div>
                 </div>
 			{% endfor %}
 			</div>
+
+            <hr>
+
 			<h2 class="mb-4">Las estaciones los mas altas :</h2>
 			<div class="row justify-content-center">
 			{% for estacion in estacionesPorAltura %}
@@ -59,8 +58,7 @@
                             <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
                             <p>La estacion tiene <b>{{ estacion.alturaMaxima }} metros</b> de altura al maxima</p>
                             {% load static %}
-                            <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
-                            <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+                            <a href="{% url 'estacion' estacion.id %}"> <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" /></a>
                         </div>
                     </div>
                 </div>
