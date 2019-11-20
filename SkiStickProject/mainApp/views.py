@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista
+from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
+from .forms import ComentarioForm
 
 from pprint import pprint
 from django.http import request, response
@@ -20,7 +21,9 @@ def estaciones(request):
 def estacion(request, id_estacion):
     estacion = Estacion.objects.get(id=id_estacion)
     estacionToTipoPista = EstacionToTipoPista.objects.filter(estacion_id=estacion.id)
-    return render(request, 'estacion.html', {'estacion':estacion, 'estacionToTipoPista':estacionToTipoPista})
+    estacionToUsuario = EstacionToUsuario.objects.filter(estacion_id=estacion.id)
+    form = ComentarioForm()
+    return render(request, 'estacion.html', {'estacion':estacion, 'estacionToTipoPista':estacionToTipoPista, 'estacionToUsuario':estacionToUsuario, 'form':form})
 
 def localizaciones(request):
     localizaciones = Localizacion.objects.all()
