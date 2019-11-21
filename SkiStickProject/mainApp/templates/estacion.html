@@ -33,7 +33,7 @@
                         {% if user.is_authenticated %}
                         <li class="list-group-item">
                             <p><b>{{ user.username }}</b>, deja tu opinión !</p>
-                            <form action="/your-name/" method="post">
+                            <form method="post">
                                 {% csrf_token %}
                                  <label for="form_calificacion">Da tu calificacion de la estacion (sobre 5) :</label>
                                 {% render_field form.calificacion id="form_calificacion" class="form-control" %}

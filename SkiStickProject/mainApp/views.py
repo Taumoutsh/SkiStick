@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
 from .forms import ComentarioForm, LoginForm
+from time import gmtime, strftime
 
 from pprint import pprint
 from django.http import request, response
@@ -22,7 +23,17 @@ def estacion(request, id_estacion):
     estacion = Estacion.objects.get(id=id_estacion)
     estacionToTipoPista = EstacionToTipoPista.objects.filter(estacion_id=estacion.id)
     estacionToUsuario = EstacionToUsuario.objects.filter(estacion_id=estacion.id)
-    form = ComentarioForm()
+    form = ComentarioForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            calificacion = form.cleaned_data['calificacion']
+            pprint(calificacion)
+            comentario = form.cleaned_data['comentario']
+            showtime = strftime("%d-%m-%Y", gmtime())
+
+            post = EstacionToUsuario.objects.create(calificacion=calificacion, comentario=comentario,
+                                         fecha=showtime, estacion_id=estacion.pk, usuario_id=request.user.id)
+
     return render(request, 'estacion.html', {'estacion':estacion, 'estacionToTipoPista':estacionToTipoPista, 'estacionToUsuario':estacionToUsuario, 'form':form})
 
 def localizaciones(request):

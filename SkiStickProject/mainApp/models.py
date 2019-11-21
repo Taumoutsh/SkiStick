@@ -49,7 +49,7 @@ class EstacionToUsuario(models.Model):
    fecha = models.TextField()
    calificacion = models.IntegerField()
 
-   usuario = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+   usuario = models.ForeignKey(User, on_delete=models.CASCADE)
    estacion = models.ForeignKey('Estacion', on_delete=models.CASCADE)
 
    def __str__(self):
