@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
-from .forms import ComentarioForm
+from .forms import ComentarioForm, LoginForm
 
 from pprint import pprint
 from django.http import request, response
@@ -43,3 +43,7 @@ def tipopista(request, id_tipoPista):
     tipoPista = TipoPista.objects.get(id=id_tipoPista)
     estacionToTipoPista = EstacionToTipoPista.objects.filter(tipoPista_id=id_tipoPista)
     return render(request, 'tipopista.html', {'tipoPista':tipoPista, 'estacionToTipoPista':estacionToTipoPista})
+
+def login(request):
+    form = LoginForm()
+    return render(request, 'registration/login.html', {'form':form})
