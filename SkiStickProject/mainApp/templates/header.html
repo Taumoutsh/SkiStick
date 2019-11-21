@@ -19,10 +19,11 @@
 				<a class="p-2 text-dark" href="{% url 'estaciones' %}">Ver los estaciones</a>
 				<a class="p-2 text-dark" href="{% url 'localizaciones' %}">Ver las localizaciones</a>
 				<a class="p-2 text-dark" href="{% url 'tipospistas' %}">Ver los tipos de pistas</a>
-				{% if user.is_authenticated %}
-					<a class="p-2 text-dark" href="{% url 'logout' %}">Disconectar ({{ user.username }})</a>
-				{% else %}
-					<a class="p-2 text-dark" href="{% url 'login' %}">Conectarse</a>
-				{% endif %}
 			</nav>
+			{% if user.is_authenticated %}
+			<a class="btn btn-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Disconectar ({{ user.first_name }} {{ user.last_name }})</a>
+			{% else %}
+			<a class="btn btn-primary mr-3" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Conectarse</a>
+			<a class="btn btn-outline-primary" href="{% url 'signin' %}"><i class="fas fa-user-plus"></i> Registrarse</a>
+			{% endif %}
 		</div>

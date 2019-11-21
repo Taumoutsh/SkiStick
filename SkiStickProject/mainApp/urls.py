@@ -10,5 +10,6 @@ urlpatterns = [
     path('localizacion/<id_localizacion>', views.localizacion, name='localizacion'),
     path('tipospistas', views.tipospistas, name='tipospistas'),
     path('tipopista/<id_tipoPista>', views.tipopista, name='tipopista'),
-    path('cuento/', include('django.contrib.auth.urls'))
+    path('cuento/', include('django.contrib.auth.urls')),
+    path('cuento/signin/', views.signin, name='signin')
 ]

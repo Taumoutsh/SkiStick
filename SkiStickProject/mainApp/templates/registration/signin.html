@@ -1,12 +1,12 @@
 {% include "header.html" %}
 {% load widget_tweaks %}
-        <h1 class="jumbotron">Conectarse a SkiStick</h1>
-        <div class="col-4">
+        <h1 class="jumbotron">Registrarse a SkiStick</h1>
+        <div class="col-5">
             <form method="post">
                 <div class="container">
                     <div class="form-group">
                         {% csrf_token %}
-                        <table class="table">
+                         <table class="table">
                             {{ form.as_table }}
                         </table>
                         <input type="submit" class="btn btn-primary mt-4" value="Conectarse">

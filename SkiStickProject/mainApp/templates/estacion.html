@@ -25,26 +25,29 @@
                     <ul class="list-group">
                         {% for comentario in estacionToUsuario %}
                         <li class="list-group-item">
-                            <p>Escribo por <b>{{ comentario.usuario.username }}</b> el <b>{{ comentario.fecha }}</b></p>
+                            <p>Comentario dejado por <b>{{ comentario.usuario.username }}</b> el <b>{{ comentario.fecha }}</b></p>
                             <p>Calificacion de la estacion <b>{{ comentario.calificacion }}</b></p>
-                            <p>Comentario : <i>{{ comentario.comentario }}</i></p>
+                            <p><i>{{ comentario.comentario }}</i></p>
                         </li>
                         {% endfor %}
                         {% if user.is_authenticated %}
                         <li class="list-group-item">
-                            <p><b>{{ user.username }}</b>, deja tu opinión !</p>
+                            <p><b>{{ user.first_name }} {{ user.last_name }}</b>, deja tu opinión !</p>
                             <form method="post">
-                                {% csrf_token %}
+                                <table class="table">
+                                    {% csrf_token %}
                                  <label for="form_calificacion">Da tu calificacion de la estacion (sobre 5) :</label>
                                 {% render_field form.calificacion id="form_calificacion" class="form-control" %}
                                 <label for="form_comentario">Tus comentarios :</label>
                                 {% render_field form.comentario id="form_comentario" class="form-control" %}
+                                </table>
                                 <input type="submit" class="btn btn-primary mt-4" value="Publicar">
                             </form>
                         </li>
                         {% else %}
-                         <li class="list-group-item">
-                             <p>Debes estar registrado para escribir un comentario. <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Conectarse</a></p>
+                        <li class="list-group-item">
+                            <p><b>Debes estar registrado para escribir un comentario.</b></p>
+                            <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Conectarse</a>
                         </li>
                         {% endif %}
                     </ul>
