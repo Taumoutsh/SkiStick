@@ -26,8 +26,17 @@
                         {% for comentario in estacionToUsuario %}
                         <li class="list-group-item">
                             <p>Comentario dejado por <b>{{ comentario.usuario.username }}</b> el <b>{{ comentario.fecha }}</b></p>
-                            <p>Calificacion de la estacion <b>{{ comentario.calificacion }}</b></p>
-                            <p><i>{{ comentario.comentario }}</i></p>
+                                <div class="star-rated">
+                                    {% for i in '12345'|make_list %}
+                                        {% if forloop.counter <= comentario.calificacion %}
+                                        <span class="fa fa-star"></span>
+                                        {% endif %}
+                                        {% if forloop.counter > comentario.calificacion %}
+                                        <span class="fa fa-star-o"></span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            <p class="mt-2"><i>{{ comentario.comentario }}</i></p>
                         </li>
                         {% endfor %}
                         {% if user.is_authenticated %}
@@ -36,9 +45,15 @@
                             <form method="post">
                                 <table class="table">
                                     {% csrf_token %}
-                                 <label for="form_calificacion">Da tu calificacion de la estacion (sobre 5) :</label>
-                                {% render_field form.calificacion id="form_calificacion" class="form-control" %}
-                                <label for="form_comentario">Tus comentarios :</label>
+                                    <input id="form_calificacion" type="hidden" name="calificacion" value="0">
+                                    <div class="star-rating">
+                                      <span class="fa fa-star-o" id="s1" value="1"></span>
+                                      <span class="fa fa-star-o" id="s2" value="2"></span>
+                                      <span class="fa fa-star-o" id="s3" value="3"></span>
+                                      <span class="fa fa-star-o" id="s4" value="4"></span>
+                                      <span class="fa fa-star-o" id="s5" value="5"></span>
+                                    </div>
+                                <label for="form_comentario" class="mt-2">Tus comentarios :</label>
                                 {% render_field form.comentario id="form_comentario" class="form-control" %}
                                 </table>
                                 <input type="submit" class="btn btn-primary mt-4" value="Publicar">
