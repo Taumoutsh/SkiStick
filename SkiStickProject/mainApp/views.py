@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
 from .forms import ComentarioForm, LoginForm, SigninForm
 from time import gmtime, strftime
@@ -28,12 +28,11 @@ def estacion(request, id_estacion):
     if request.method == 'POST':
         if form.is_valid():
             calificacion = form.cleaned_data['calificacion']
-            pprint(calificacion)
             comentario = form.cleaned_data['comentario']
             showtime = strftime("%d-%m-%Y", gmtime())
             post = EstacionToUsuario.objects.create(calificacion=calificacion, comentario=comentario,
-                                         fecha=showtime, estacion_id=estacion.pk, usuario_id=request.user.id)
-            form = ComentarioForm()
+                fecha=showtime, estacion_id=estacion.pk, usuario_id=request.user.id)
+            return redirect('/main/estacion/'+id_estacion)
     return render(request, 'estacion.html', {'estacion':estacion, 'estacionToTipoPista':estacionToTipoPista, 'estacionToUsuario':estacionToUsuario, 'form':form})
 
 def localizaciones(request):
@@ -70,5 +69,5 @@ def signin(request):
             contrasena = form.cleaned_data['contrasena']
             user = User.objects.create_user(first_name=nombre, last_name=apellido,
                                             username=usuario, email=email, password=contrasena)
-            form = SigninForm()
+            form = SigninForm(None)
     return render(request, 'registration/signin.html', {'form':form})
