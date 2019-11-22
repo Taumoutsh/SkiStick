@@ -26,7 +26,7 @@ $(function(){
     });
 
     $('.star-rating').on("click", function() {
-        var rating = $('.fa-star').length;
+        var rating = $('.star-rating > .fa-star').length;
         $('#form_calificacion').val(rating);
     });
 });
