@@ -1,39 +1,30 @@
-<!DOCTYPE html>
 {% load mainApp_extras %}
-<html lang="en">
-<head>
-    <title>Todas las estaciones</title>
-    <meta charset="utf-8">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-    {% include "header.html" %}
-        <h1 class="jumbotron">{{ localizacion.mensaje }}</h1>
-    <div class="container mt-4 ">
-        <h4>Detalles de la localizacion :</h4>
-        <p class="mb-4">{{ localizacion.detalles }}</p>
-        <h4 class="mb-4">Ver los estaciones de este localizacion :</h4>
-        {% for estacion in estaciones %}
-        {% ifequal forloop.counter|modulo:3 1 %}
-        <div class="row justify-content-center">
-            {% endifequal %}
-            <div class="col-4 card-deck text-center">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4>{{ estacion.nombre }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
-                        {% load static %}
-                        <img src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" />
-                        <a href="{% url 'estacion' estacion.id %}">Consultar</a>
+        {% include "header.html" %}
+            <h1 class="jumbotron">{{ localizacion.mensaje }}</h1>
+        <div class="container mt-4 ">
+            <h4>Detalles de la localizacion :</h4>
+            <p class="mb-4">{{ localizacion.detalles }}</p>
+            <h4 class="mb-4">Ver los estaciones de este localizacion :</h4>
+            {% for estacion in estaciones %}
+            {% ifequal forloop.counter|modulo:3 1 %}
+            <div class="row justify-content-center">
+                {% endifequal %}
+                <div class="col-4 card-deck text-center">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4>{{ estacion.nombre }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>La estacion es situada en : <b>{{ estacion.localizacion.mensaje }}</b></p>
+                            {% load static %}
+                            <a href="{% url 'estacion' estacion.id %}"><img class="img-thumbnail" src="{% static estacion.imagen %}" class="img-thumbnail" alt="Mon image" /></a>
+                        </div>
                     </div>
                 </div>
+                {% ifequal forloop.counter|modulo:3 0 %}
             </div>
-            {% ifequal forloop.counter|modulo:3 0 %}
+            {% endifequal %}
+            {% endfor %}
         </div>
-        {% endifequal %}
-        {% endfor %}
-    </div>
-</body>
+    </body>
 </html>

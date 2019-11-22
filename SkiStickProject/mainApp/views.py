@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista
+from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
+from .forms import ComentarioForm, LoginForm, SigninForm
+from time import gmtime, strftime
+from django.contrib.auth.models import User
 
 from pprint import pprint
 from django.http import request, response
@@ -20,7 +23,18 @@ def estaciones(request):
 def estacion(request, id_estacion):
     estacion = Estacion.objects.get(id=id_estacion)
     estacionToTipoPista = EstacionToTipoPista.objects.filter(estacion_id=estacion.id)
-    return render(request, 'estacion.html', {'estacion':estacion, 'estacionToTipoPista':estacionToTipoPista})
+    estacionToUsuario = EstacionToUsuario.objects.filter(estacion_id=estacion.id)
+    form = ComentarioForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            calificacion = form.cleaned_data['calificacion']
+            pprint(calificacion)
+            comentario = form.cleaned_data['comentario']
+            showtime = strftime("%d-%m-%Y", gmtime())
+            post = EstacionToUsuario.objects.create(calificacion=calificacion, comentario=comentario,
+                                         fecha=showtime, estacion_id=estacion.pk, usuario_id=request.user.id)
+            form = ComentarioForm()
+    return render(request, 'estacion.html', {'estacion':estacion, 'estacionToTipoPista':estacionToTipoPista, 'estacionToUsuario':estacionToUsuario, 'form':form})
 
 def localizaciones(request):
     localizaciones = Localizacion.objects.all()
@@ -40,3 +54,21 @@ def tipopista(request, id_tipoPista):
     tipoPista = TipoPista.objects.get(id=id_tipoPista)
     estacionToTipoPista = EstacionToTipoPista.objects.filter(tipoPista_id=id_tipoPista)
     return render(request, 'tipopista.html', {'tipoPista':tipoPista, 'estacionToTipoPista':estacionToTipoPista})
+
+def login(request):
+    form = LoginForm()
+    return render(request, 'registration/login.html', {'form':form})
+
+def signin(request):
+    form = SigninForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            apellido = form.cleaned_data['apellido']
+            usuario = form.cleaned_data['usuario']
+            email = form.cleaned_data['email']
+            contrasena = form.cleaned_data['contrasena']
+            user = User.objects.create_user(first_name=nombre, last_name=apellido,
+                                            username=usuario, email=email, password=contrasena)
+            form = SigninForm()
+    return render(request, 'registration/signin.html', {'form':form})

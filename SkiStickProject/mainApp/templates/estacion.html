@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{{ estacion.nombre }}</title>
-    <meta charset="utf-8">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-    {% include "header.html" %}
+ {% include "header.html" %}
+ {% load widget_tweaks %}
         <h1 class="jumbotron">{{ estacion.nombre }}</h1>
     <div class="container mt-4 ">
         <div class="col-sm card-deck">
@@ -15,9 +8,9 @@
                     <h4 class="mb-3">Detalles de la estacion :</h4>
                     <ul class="list-group">
                         <li class="list-group-item"><i class="fas fa-skiing"></i> La estacion tiene <b>{{ estacion.kmsPista }}</b> kilometros de pista</li>
-                        <li class="list-group-item"><i class="fas fa-tram"></i> Tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecanica</li>
+                        <li class="list-group-item"><i class="fas fa-tram"></i> Tiene <b>{{ estacion.numeroRemontes }}</b> remontes mecánicos</li>
                         <li class="list-group-item"><i class="fas fa-mountain"></i> La altura minima es <b>{{ estacion.alturaMinima }}</b> metros y
-                       la altura maxima es <b>{{ estacion.alturaMaxima }}</b> metros</li>
+                        la altura maxima es <b>{{ estacion.alturaMaxima }}</b> metros</li>
                         <li class="list-group-item"><i class="fas fa-map-marker-alt"></i> La estacion est situada en : <b>{{ estacion.localizacion.mensaje }}</b></li>
                         <li class="list-group-item"><b>Numero de pista con su difficultad :</b></li>
                     {% for estacion in estacionToTipoPista %}
@@ -25,7 +18,54 @@
                     {% endfor %}
                     </ul>
                     {% load static %}
-                        <img src="{% static estacion.imagen %}" alt="Mon image" class="img-thumbnail" />
+                        <img src="{% static estacion.imagen %}" class="img-fluid center-block" alt="Mon image" />
+                </div>
+                <div class="card-body">
+                    <h4 class="mb-3">Commentarios :</h4>
+                    <ul class="list-group">
+                        {% for comentario in estacionToUsuario %}
+                        <li class="list-group-item">
+                            <p>Comentario dejado por <b>{{ comentario.usuario.username }}</b> el <b>{{ comentario.fecha }}</b></p>
+                                <div class="star-rated">
+                                    {% for i in '12345'|make_list %}
+                                        {% if forloop.counter <= comentario.calificacion %}
+                                        <span class="fa fa-star"></span>
+                                        {% endif %}
+                                        {% if forloop.counter > comentario.calificacion %}
+                                        <span class="fa fa-star-o"></span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            <p class="mt-2"><i>{{ comentario.comentario }}</i></p>
+                        </li>
+                        {% endfor %}
+                        {% if user.is_authenticated %}
+                        <li class="list-group-item">
+                            <p><b>{{ user.first_name }} {{ user.last_name }}</b>, deja tu opinión !</p>
+                            <form method="post">
+                                <table class="table">
+                                    {% csrf_token %}
+                                    <input id="form_calificacion" type="hidden" name="calificacion" value="0">
+                                    <div class="star-rating">
+                                      <span class="fa fa-star-o" id="s1" value="1"></span>
+                                      <span class="fa fa-star-o" id="s2" value="2"></span>
+                                      <span class="fa fa-star-o" id="s3" value="3"></span>
+                                      <span class="fa fa-star-o" id="s4" value="4"></span>
+                                      <span class="fa fa-star-o" id="s5" value="5"></span>
+                                    </div>
+                                <label for="form_comentario" class="mt-2">Tus comentarios :</label>
+                                {% render_field form.comentario id="form_comentario" class="form-control" %}
+                                </table>
+                                <input type="submit" class="btn btn-primary mt-4" value="Publicar">
+                            </form>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">
+                            <p><b>Debes estar registrado para escribir un comentario.</b></p>
+                            <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Conectarse</a>
+                        </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
         </div>
