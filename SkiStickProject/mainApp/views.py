@@ -1,8 +1,11 @@
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, redirect
 from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
 from .forms import ComentarioForm, LoginForm, SigninForm
 from time import gmtime, strftime
 from django.contrib.auth.models import User
+from django.core import serializers
 
 from pprint import pprint
 from django.http import request, response
@@ -13,8 +16,9 @@ def home(request):
     estacionesPorPistas = Estacion.objects.order_by('-kmsPista')[:3]
     estacionesPorRemontes = Estacion.objects.order_by('-numeroRemontes')[:3]
     estacionesPorAltura = Estacion.objects.order_by('-alturaMaxima')[:3]
+    estacionesRandom = Estacion.objects.order_by('?')[:5]
 
-    return render(request, 'index.html', {'estacionesPorPistas':estacionesPorPistas, 'estacionesPorRemontes':estacionesPorRemontes, 'estacionesPorAltura':estacionesPorAltura})
+    return render(request, 'index.html', {'estacionesPorPistas':estacionesPorPistas, 'estacionesPorRemontes':estacionesPorRemontes, 'estacionesPorAltura':estacionesPorAltura, 'estacionesRandom': estacionesRandom})
 
 def estaciones(request):
     estaciones = Estacion.objects.all()
@@ -71,3 +75,11 @@ def signin(request):
                                             username=usuario, email=email, password=contrasena)
             form = SigninForm(None)
     return render(request, 'registration/signin.html', {'form':form})
+
+def buscar(request):
+    estaciones = Estacion.objects.all()
+    localizaciones = Localizacion.objects.all()
+    tipospistas = TipoPista.objects.all()
+    estacionesDjango = serializers.serialize('python', estaciones)
+    estacionesJSON = json.dumps(estacionesDjango, cls=DjangoJSONEncoder)
+    return render(request, 'buscar.html', {"estaciones": estacionesJSON, "localizaciones": localizaciones, "tipopistas": tipospistas})

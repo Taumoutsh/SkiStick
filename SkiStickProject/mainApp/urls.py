@@ -11,5 +11,6 @@ urlpatterns = [
     path('tipospistas', views.tipospistas, name='tipospistas'),
     path('tipopista/<id_tipoPista>', views.tipopista, name='tipopista'),
     path('cuento/', include('django.contrib.auth.urls')),
-    path('cuento/signin/', views.signin, name='signin')
+    path('cuento/signin/', views.signin, name='signin'),
+    path('buscar', views.buscar, name='buscar')
 ]
