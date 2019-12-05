@@ -76,10 +76,13 @@ def signin(request):
             form = SigninForm(None)
     return render(request, 'registration/signin.html', {'form':form})
 
-def buscar(request):
-    estaciones = Estacion.objects.all()
-    localizaciones = Localizacion.objects.all()
-    tipospistas = TipoPista.objects.all()
-    estacionesDjango = serializers.serialize('python', estaciones)
-    estacionesJSON = json.dumps(estacionesDjango, cls=DjangoJSONEncoder)
-    return render(request, 'buscar.html', {"estaciones": estacionesJSON, "localizaciones": localizaciones, "tipopistas": tipospistas})
+def gestionEstacion(request):
+    return render(request, 'gestionEstacion.html')
+
+#def gestion(request):
+#    estaciones = Estacion.objects.all()
+#    localizaciones = Localizacion.objects.all()
+#    tipospistas = TipoPista.objects.all()
+#    estacionesDjango = serializers.serialize('python', estaciones)
+#    estacionesJSON = json.dumps(estacionesDjango, cls=DjangoJSONEncoder)
+#    return render(request, 'gestionEstacion.html', {"estaciones": estacionesJSON, "localizaciones": localizaciones, "tipopistas": tipospistas})

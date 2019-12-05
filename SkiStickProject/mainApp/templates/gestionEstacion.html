@@ -1,0 +1,213 @@
+{% load mainApp_extras %}
+{% include "header.html" %}
+
+    <div class="container">
+    <div id="starting">
+      <div class="container">
+        <div class="row">
+          <h1>List of Articles
+          <button class="btn btn-success" data-toggle="modal" data-target="#addEstacionModal">ADD ARTICLE</button>
+          </h1>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="estacion in estaciones">
+                <th scope="row">${estacion.id}</th>
+                <td>${estacion.nombre}</td>
+                <td>
+                  <button class="btn btn-info" v-on:click="getEstacion(estacion.id)">Edit</button>
+                  <button class="btn btn-danger" v-on:click="deleteEstacion(estacion.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="loading" v-if="loading===true">Loading&#8230;</div>
+    </div>
+        <!-- Add Article Modal -->
+          <div class="modal fade" id="addEstacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addEstacionModalModalLongTitle">ADD ARTICLE</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form v-on:submit.prevent="addEstacion()">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="article_heading">Article Heading</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="estacion_heading"
+                        placeholder="Enter Article Heading"
+                        v-model="newEstacion.article_heading"
+                        required="required" >
+                    </div>
+                    <div class="form-group">
+                      <label for="article_body">Article Body</label>
+                      <textarea
+                        class="form-control"
+                        id="estacion_body"
+                        placeholder="Enter Article Body"
+                        v-model="newEstacion.article_body"
+                        required="required"
+                        rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+              </div>
+            </div>
+           <div class="loading" v-if="loading===true">Loading&#8230;</div>
+          </div>
+          <!-- End of estacion modal -->
+
+        <!-- Edit Estacion Modal -->
+          <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editEstacionModalLongTitle">EDIT ARTICLE</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form v-on:submit.prevent="updateArticle()">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="article_heading">Article Heading</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="article_heading"
+                        placeholder="Enter Article Heading"
+                        v-model="currentArticle.article_heading"
+                        required="required" >
+                    </div>
+                    <div class="form-group">
+                      <label for="article_body">Article Body</label>
+                      <textarea
+                        class="form-control"
+                        id="article_body"
+                        placeholder="Enter Article Body"
+                        v-model="currentArticle.article_body"
+                        required="required"
+                        rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+              </div>
+            </div>
+            <div class="loading" v-if="loading===true">Loading&#8230;</div>
+          </div>
+          <!-- End of edit article modal -->
+    </div>
+
+    <script type="text/javascript">
+
+        new Vue({
+            http: {
+                root: 'http://localhost:8000',
+                headers: {
+                  Authorization: 'Basic YXBpOnBhc3N3b3Jk'
+                }
+            },
+           el: '#starting',
+           delimiters: ['${','}'],
+           data: {
+               estaciones: [],
+               loading: false,
+               currentEstacion: {},
+               message: null,
+               newArticle: { 'nombre': null },
+            },
+            mounted: function() {
+            this.getEstaciones();
+            },
+            methods: {
+                getEstaciones: function() {
+                    this.loading = true;
+
+                    axios.get('http://127.0.0.1:8000/main/api/estacion/')
+                    .then((response) => {
+                        this.estaciones = response.data;
+                        this.loading = false;
+                      }).catch((err) => {
+                       this.loading = false;
+                       console.log(err);
+                      })
+             },
+                 getEstacion: function(id) {
+                  this.loading = true;
+                  this.$http.get('/main/api/estacion/${id}/')
+                      .then((response) => {
+                        this.currentArticle = response.data;
+                        $("#editEstacionModal").modal('show');
+                        this.loading = false;
+                      })
+                      .catch((err) => {
+                        this.loading = false;
+                        console.log(err);
+                      })
+             },
+             addEstacion: function() {
+              this.loading = true;
+              this.$http.post('/main/api/estacion/', this.newArticle)
+                  .then((response) => {
+                    this.loading = false;
+                    this.getEstaciones();
+                  })
+                  .catch((err) => {
+                    this.loading = false;
+                    console.log(err);
+                  })
+             },
+                 updateEstacion: function() {
+                  this.loading = true;
+                  this.$http.put('/main/api/estacion/${this.currentArticle.article_id}/', this.currentArticle)
+                      .then((response) => {
+                        this.loading = false;
+                        this.currentArticle = response.data;
+                        this.getEstaciones();
+                      })
+                      .catch((err) => {
+                        this.loading = false;
+                        console.log(err);
+                      })
+             },
+                 deleteEstacion: function(id) {
+                  this.loading = true;
+                  this.$http.delete('/main/api/estacion/${id}/')
+                      .then((response) => {
+                        this.loading = false;
+                        this.getEstaciones();
+                      })
+                      .catch((err) => {
+                        this.loading = false;
+                        console.log(err);
+                      })
+             }
+        }
+         });
+
+
+    </script>
+    </body>
+</html>

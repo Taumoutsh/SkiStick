@@ -7,6 +7,7 @@
 		{% load static %}
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<link rel="icon" type="image/png" href="{% static 'nieve.png' %}" />
 	</head>
 	<body>
@@ -21,9 +22,11 @@
 				<a class="p-2 text-dark" href="{% url 'estaciones' %}">Los estaciones</a>
 				<a class="p-2 text-dark" href="{% url 'localizaciones' %}">Las localizaciones</a>
 				<a class="p-2 text-dark" href="{% url 'tipospistas' %}">Los tipos de pistas</a>
-				<a class="p-2 text-dark" href="{% url 'buscar' %}"><i class="fas fa-search"></i> Buscar</a>
 			</nav>
 			{% if user.is_authenticated %}
+			{% if request.user.is_superuser %}
+				<a class="p-2 text-dark" href="{% url 'gestionEstacion' %}"><i class="fas fa-search"></i> Gestion estacion</a>
+			{% endif %}
 			<a class="btn btn-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Disconectar ({{ user.first_name }} {{ user.last_name }})</a>
 			{% else %}
 			<a class="btn btn-primary mr-3" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Conectarse</a>

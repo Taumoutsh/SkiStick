@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
+from mainApp.routers import router
 from mainApp import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,5 +14,6 @@ urlpatterns = [
     path('tipopista/<id_tipoPista>', views.tipopista, name='tipopista'),
     path('cuento/', include('django.contrib.auth.urls')),
     path('cuento/signin/', views.signin, name='signin'),
-    path('buscar', views.buscar, name='buscar')
+    path('api/estaciones/',views.gestionEstacion, name='gestionEstacion'),
+    path('api/', include(router.urls)),
 ]
