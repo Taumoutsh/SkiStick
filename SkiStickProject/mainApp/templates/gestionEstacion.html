@@ -1,19 +1,18 @@
 {% load mainApp_extras %}
 {% include "header.html" %}
 
-    <div class="container">
     <div id="starting">
       <div class="container">
         <div class="row">
-          <h1>List of Articles
-          <button class="btn btn-success" data-toggle="modal" data-target="#addEstacionModal">ADD ARTICLE</button>
+          <h1>List of Estaciones
+          <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEstacionModal">Añadir una estacion</button>
           </h1>
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Heading</th>
-                <th scope="col">Action</th>
+                <th scope="col">Identificador</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -21,22 +20,18 @@
                 <th scope="row">${estacion.id}</th>
                 <td>${estacion.nombre}</td>
                 <td>
-                  <button class="btn btn-info" v-on:click="getEstacion(estacion.id)">Edit</button>
-                  <button class="btn btn-danger" v-on:click="deleteEstacion(estacion.id)">Delete</button>
+                  <button class="btn btn-info" v-on:click="getEstacion(estacion.id)">Cambiar</button>
+                  <button class="btn btn-danger" v-on:click="deleteEstacion(estacion.id)">Borrar</button>
                 </td>
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-      <div class="loading" v-if="loading===true">Loading&#8230;</div>
-    </div>
-        <!-- Add Article Modal -->
+          <!-- Add Estacion Modal -->
           <div class="modal fade" id="addEstacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="addEstacionModalModalLongTitle">ADD ARTICLE</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">ADD estacion</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -44,68 +39,71 @@
                 <form v-on:submit.prevent="addEstacion()">
                 <div class="modal-body">
                     <div class="form-group">
-                      <label for="article_heading">Article Heading</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="estacion_heading"
-                        placeholder="Enter Article Heading"
-                        v-model="newEstacion.article_heading"
-                        required="required" >
-                    </div>
-                    <div class="form-group">
-                      <label for="article_body">Article Body</label>
-                      <textarea
-                        class="form-control"
-                        id="estacion_body"
-                        placeholder="Enter Article Body"
-                        v-model="newEstacion.article_body"
-                        required="required"
-                        rows="3"></textarea>
+                      <label for="estacion_body">Nombre :</label>
+                      <input type="text" class="form-control" id="nombre" placeholder="Enter Estacion Heading" v-model="currentEstacion.nombre" required="required" >
+                     <label for="estacion_body">Kilometras de pista :</label>
+                      <input type="text" class="form-control" id="kmsPista" placeholder="Enter Estacion Heading" v-model="currentEstacion.kmsPista" required="required" >
+                    <label for="estacion_body">Numero remontes :</label>
+                      <input type="text" class="form-control" id="numeroRemontes" placeholder="Enter Estacion Heading" v-model="currentEstacion.numeroRemontes" required="required" >
+                    <label for="estacion_body">Altura maxima</label>
+                      <input type="text" class="form-control" id="alturaMaxima" placeholder="Enter Estacion Heading" v-model="currentEstacion.alturaMaxima" required="required" >
+                    <label for="estacion_body">Altura minimal</label>
+                      <input type="text" class="form-control" id="alturaMinima" placeholder="Enter Estacion Heading" v-model="currentEstacion.alturaMinima" required="required" >
+                      <label for="estacion_body">Localizacion</label>
+                      <select class="form-control" v-model="selected">
+                        <option v-for="localizacion in localizaciones" v-bind:value="localizacion.id">
+                          ${ localizacion.mensaje }
+                        </option>
+                      </select>
+                      <label for="estacion_body">Imagen</label>
+                      <input type="text" class="form-control" id="imagen" placeholder="Enter Estacion Heading" v-model="currentEstacion.imagen" required="required" >
                     </div>
                 </div>
+                </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
                 </form>
               </div>
             </div>
-           <div class="loading" v-if="loading===true">Loading&#8230;</div>
+            <div class="loading" v-if="loading===true">Loading&#8230;</div>
           </div>
-          <!-- End of estacion modal -->
-
-        <!-- Edit Estacion Modal -->
-          <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <!-- End of add estacion modal -->
+          <!-- Edit Estacion Modal -->
+          <div class="modal fade" id="editEstacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="editEstacionModalLongTitle">EDIT ARTICLE</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">EDIT Estacion</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form v-on:submit.prevent="updateArticle()">
+                <form v-on:submit.prevent="updateEstacion()">
                 <div class="modal-body">
                     <div class="form-group">
-                      <label for="article_heading">Article Heading</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="article_heading"
-                        placeholder="Enter Article Heading"
-                        v-model="currentArticle.article_heading"
-                        required="required" >
-                    </div>
-                    <div class="form-group">
-                      <label for="article_body">Article Body</label>
-                      <textarea
-                        class="form-control"
-                        id="article_body"
-                        placeholder="Enter Article Body"
-                        v-model="currentArticle.article_body"
-                        required="required"
-                        rows="3"></textarea>
+                      <label for="estacion_body">Nombre :</label>
+                      <input type="text" class="form-control" id="nombre" placeholder="Enter Estacion Heading" v-model="currentEstacion.nombre" required="required" >
+                     <label for="estacion_body">Kilometras de pista :</label>
+                      <input type="text" class="form-control" id="kmsPista" placeholder="Enter Estacion Heading" v-model="currentEstacion.kmsPista" required="required" >
+                    <label for="estacion_body">Numero remontes :</label>
+                      <input type="text" class="form-control" id="numeroRemontes" placeholder="Enter Estacion Heading" v-model="currentEstacion.numeroRemontes" required="required" >
+                    <label for="estacion_body">Altura maxima</label>
+                      <input type="text" class="form-control" id="alturaMaxima" placeholder="Enter Estacion Heading" v-model="currentEstacion.alturaMaxima" required="required" >
+                    <label for="estacion_body">Altura minimal</label>
+                      <input type="text" class="form-control" id="alturaMinima" placeholder="Enter Estacion Heading" v-model="currentEstacion.alturaMinima" required="required" >
+                      <label for="estacion_body">Localizacion</label>
+                      <select class="form-control" v-model="currentEstacion.localizacion">
+                        <option v-for="localizacion in localizaciones" v-bind:value="localizacion.id">
+                          ${ localizacion.mensaje }
+                        </option>
+                      </select>
+                      <label for="estacion_body">Imagen</label>
+                      <input type="text" class="form-control" id="imagen" placeholder="Enter Estacion Heading" v-model="currentEstacion.imagen" required="required" >
+                    <div v-for="a in currentEstacionToTipoPista">
+                      <label for="estacion_body">${ a.tipoPista }</label>
+                      <input type="text" class="form-control" id="numeroPistas" placeholder="Enter numero pistas" v-model="a.numeroPistas" required="required" >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -117,29 +115,42 @@
             </div>
             <div class="loading" v-if="loading===true">Loading&#8230;</div>
           </div>
-          <!-- End of edit article modal -->
+          <!-- End of edit estacion modal -->
+
+        </div>
+      </div>
+      <div class="loading" v-if="loading===true">Loading&#8230;</div>
+
     </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 
     <script type="text/javascript">
 
         new Vue({
-            http: {
-                root: 'http://localhost:8000',
-                headers: {
-                  Authorization: 'Basic YXBpOnBhc3N3b3Jk'
-                }
-            },
            el: '#starting',
            delimiters: ['${','}'],
            data: {
                estaciones: [],
+               localizaciones: [],
+               estaciontotipopista: [],
                loading: false,
                currentEstacion: {},
+               currentEstacionToTipoPista: [],
+               test: "",
                message: null,
-               newArticle: { 'nombre': null },
+               newEstacion: { 'nombre': null },
             },
             mounted: function() {
             this.getEstaciones();
+            this.getLocalizaciones();
+            this.getEstacionToTipoPista();
             },
             methods: {
                 getEstaciones: function() {
@@ -154,22 +165,61 @@
                        console.log(err);
                       })
              },
+              getLocalizaciones: function() {
+                    this.loading = true;
+                    axios.get('http://127.0.0.1:8000/main/api/localizacion/')
+                    .then((response) => {
+                        this.localizaciones = response.data;
+                        this.loading = false;
+                      }).catch((err) => {
+                       this.loading = false;
+                       console.log(err);
+                      })
+             },
+              getEstacionToTipoPista: function() {
+                    this.loading = true;
+                    axios.get('http://127.0.0.1:8000/main/api/estaciontotipopista/')
+                    .then((response) => {
+                        this.estaciontotipopista = response.data;
+                        this.loading = false;
+                      }).catch((err) => {
+                       this.loading = false;
+                       console.log(err);
+                      })
+             },
                  getEstacion: function(id) {
                   this.loading = true;
-                  this.$http.get('/main/api/estacion/${id}/')
+                  this.currentEstacionToTipoPista = [];
+                  axios.get('http://127.0.0.1:8000/main/api/estacion/'+id)
                       .then((response) => {
-                        this.currentArticle = response.data;
-                        $("#editEstacionModal").modal('show');
+                        this.currentEstacion = response.data;
                         this.loading = false;
-                      })
+                        for (var i = 0; i < this.estaciontotipopista.length; i++) {
+                          if (this.currentEstacion.id === this.estaciontotipopista[i].estacion) {
+                            this.currentEstacionToTipoPista.push(this.estaciontotipopista[i]);
+                          }
+                        }
+
+                        $("#editEstacionModal").modal('show');
+                        })
                       .catch((err) => {
                         this.loading = false;
                         console.log(err);
                       })
+
              },
              addEstacion: function() {
               this.loading = true;
-              this.$http.post('/main/api/estacion/', this.newArticle)
+              axios.post('http://127.0.0.1:8000/main/api/estacion/', {
+                    id : this.currentEstacion.id,
+                    nombre : this.currentEstacion.nombre,
+                    kmsPista : this.currentEstacion.kmsPista,
+                    numeroRemontes : this.currentEstacion.numeroRemontes,
+                    alturaMaxima : this.currentEstacion.alturaMaxima,
+                    alturaMinima : this.currentEstacion.alturaMinima,
+                    imagen : this.currentEstacion.imagen,
+                    localizacion : this.currentEstacion.localizacion
+                  })
                   .then((response) => {
                     this.loading = false;
                     this.getEstaciones();
@@ -181,10 +231,19 @@
              },
                  updateEstacion: function() {
                   this.loading = true;
-                  this.$http.put('/main/api/estacion/${this.currentArticle.article_id}/', this.currentArticle)
+
+                  axios.put('http://127.0.0.1:8000/main/api/estacion/'+this.currentEstacion.id+'/', {
+                    nombre : this.currentEstacion.nombre,
+                    kmsPista : this.currentEstacion.kmsPista,
+                    numeroRemontes : this.currentEstacion.numeroRemontes,
+                    alturaMaxima : this.currentEstacion.alturaMaxima,
+                    alturaMinima : this.currentEstacion.alturaMinima,
+                    localizacion : this.currentEstacion.localizacion,
+                    imagen : this.currentEstacion.imagen
+                  })
                       .then((response) => {
                         this.loading = false;
-                        this.currentArticle = response.data;
+                        this.currentEstacion = response.data;
                         this.getEstaciones();
                       })
                       .catch((err) => {
@@ -194,7 +253,7 @@
              },
                  deleteEstacion: function(id) {
                   this.loading = true;
-                  this.$http.delete('/main/api/estacion/${id}/')
+                  axios.delete('http://127.0.0.1:8000/main/api/estacion/'+id+'/')
                       .then((response) => {
                         this.loading = false;
                         this.getEstaciones();
