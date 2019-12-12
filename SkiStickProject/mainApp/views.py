@@ -1,15 +1,8 @@
-import json
-from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, redirect
 from .models import Estacion, Localizacion, TipoPista, EstacionToTipoPista, EstacionToUsuario
 from .forms import ComentarioForm, LoginForm, SigninForm
 from time import gmtime, strftime
 from django.contrib.auth.models import User
-from django.core import serializers
-
-from pprint import pprint
-from django.http import request, response
-# Create your views here.
 
 def home(request):
     # Le - devant kmsPista signifie descendant, ne rien mettre signifie ascendant
@@ -78,11 +71,3 @@ def signin(request):
 
 def gestionEstacion(request):
     return render(request, 'gestionEstacion.html')
-
-#def gestion(request):
-#    estaciones = Estacion.objects.all()
-#    localizaciones = Localizacion.objects.all()
-#    tipospistas = TipoPista.objects.all()
-#    estacionesDjango = serializers.serialize('python', estaciones)
-#    estacionesJSON = json.dumps(estacionesDjango, cls=DjangoJSONEncoder)
-#    return render(request, 'gestionEstacion.html', {"estaciones": estacionesJSON, "localizaciones": localizaciones, "tipopistas": tipospistas})

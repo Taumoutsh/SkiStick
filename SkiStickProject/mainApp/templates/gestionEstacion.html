@@ -39,26 +39,26 @@
                 </div>
                 <form v-on:submit.prevent="addEstacion()">
                 <div class="modal-body">
-                    <div class="form-group">
-                      <label for="estacion_body">Nombre :</label>
-                      <input type="text" class="form-control" id="nombre" placeholder="Nombre" v-model="currentEstacion.nombre" required="required" >
-                     <label for="estacion_body">Kilometras de pista :</label>
-                      <input type="text" class="form-control" id="kmsPista" placeholder="Kilometros de pista" v-model="currentEstacion.kmsPista" required="required" >
+                  <div class="form-group">
+                    <label for="estacion_body">Nombre :</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" v-model="currentEstacion.nombre" required="required" >
+                    <label for="estacion_body">Kilometras de pista :</label>
+                    <input type="text" class="form-control" id="kmsPista" placeholder="Kilometros de pista" v-model="currentEstacion.kmsPista" required="required" >
                     <label for="estacion_body">Numero remontes :</label>
-                      <input type="text" class="form-control" id="numeroRemontes" placeholder="Numero de remontes" v-model="currentEstacion.numeroRemontes" required="required" >
+                    <input type="text" class="form-control" id="numeroRemontes" placeholder="Numero de remontes" v-model="currentEstacion.numeroRemontes" required="required" >
                     <label for="estacion_body">Altura maxima</label>
-                      <input type="text" class="form-control" id="alturaMaxima" placeholder="Altura maxima" v-model="currentEstacion.alturaMaxima" required="required" >
+                    <input type="text" class="form-control" id="alturaMaxima" placeholder="Altura maxima" v-model="currentEstacion.alturaMaxima" required="required" >
                     <label for="estacion_body">Altura minimal</label>
-                      <input type="text" class="form-control" id="alturaMinima" placeholder="Altura minima" v-model="currentEstacion.alturaMinima" required="required" >
-                      <label for="estacion_body">Localizacion</label>
-                      <select class="form-control" v-model="selected">
-                        <option v-for="localizacion in localizaciones" v-bind:value="localizacion.id">
-                          ${ localizacion.mensaje }
-                        </option>
-                      </select>
-                      <label for="estacion_body">Imagen</label>
-                      <input type="text" class="form-control" id="imagen" placeholder="Enter Estacion Heading" v-model="currentEstacion.imagen" required="required" >
-                    </div>
+                    <input type="text" class="form-control" id="alturaMinima" placeholder="Altura minima" v-model="currentEstacion.alturaMinima" required="required" >
+                    <label for="estacion_body">Localizacion</label>
+                    <select class="form-control" v-model="selected">
+                      <option v-for="localizacion in localizaciones" v-bind:value="localizacion.id">
+                        ${ localizacion.mensaje }
+                      </option>
+                    </select>
+                    <label for="estacion_body">Imagen</label>
+                    <input type="text" class="form-control" id="imagen" placeholder="Enter Estacion Heading" v-model="currentEstacion.imagen" required="required" >
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
@@ -83,29 +83,24 @@
                 <form v-on:submit.prevent="updateEstacion()">
                   {% csrf_token %}
                 <div class="modal-body">
-                    <div class="form-group">
-                      <label for="estacion_body">Nombre :</label>
-                      <input type="text" class="form-control" id="nombre" placeholder="Nombre" v-model="currentEstacion.nombre" required="required" >
-                     <label for="estacion_body">Kilometras de pista :</label>
-                      <input type="text" class="form-control" id="kmsPista" placeholder="Kilometros de pista" v-model="currentEstacion.kmsPista" required="required" >
-                    <label for="estacion_body">Numero remontes :</label>
-                      <input type="text" class="form-control" id="numeroRemontes" placeholder="Numero de remontes" v-model="currentEstacion.numeroRemontes" required="required" >
+                  <div class="form-group">
+                    <label for="estacion_body">Nombre :</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" v-model="currentEstacion.nombre" required="required" >
+                    <label for="estacion_body">Kilometras de pista :</label>
+                    <input type="text" class="form-control" id="kmsPista" placeholder="Kilometros de pista" v-model="currentEstacion.kmsPista" required="required" ><label for="estacion_body">Numero remontes :</label>
+                    <input type="text" class="form-control" id="numeroRemontes" placeholder="Numero de remontes" v-model="currentEstacion.numeroRemontes" require="required" >
                     <label for="estacion_body">Altura maxima</label>
-                      <input type="text" class="form-control" id="alturaMaxima" placeholder="Altura maxima" v-model="currentEstacion.alturaMaxima" required="required" >
+                    <input type="text" class="form-control" id="alturaMaxima" placeholder="Altura maxima" v-model="currentEstacion.alturaMaxima" required="required" >
                     <label for="estacion_body">Altura minimal</label>
-                      <input type="text" class="form-control" id="alturaMinima" placeholder="Altura minima" v-model="currentEstacion.alturaMinima" required="required" >
-                      <label for="estacion_body">Localizacion</label>
-                      <select class="form-control" v-model="currentEstacion.localizacion">
-                        <option v-for="localizacion in localizaciones" v-bind:value="localizacion.id">
-                          ${ localizacion.mensaje }
-                        </option>
-                      </select>
-                      <label for="estacion_body">Imagen</label>
-                      <input type="text" class="form-control" id="imagen" placeholder="Imagen" v-model="currentEstacion.imagen" required="required" >
-                    <!-- <div v-for="a in currentEstacionToTipoPista">
-                      <label for="estacion_body">${ a.tipoPista }</label>
-                      <input type="text" class="form-control" id="numeroPistas" placeholder="Enter numero pistas" v-model="a.numeroPistas" required="required" >
-                    </div> -->
+                    <input type="text" class="form-control" id="alturaMinima" placeholder="Altura minima" v-model="currentEstacion.alturaMinima" required="required" >
+                    <label for="estacion_body">Localizacion</label>
+                    <select class="form-control" v-model="currentEstacion.localizacion">
+                      <option v-for="localizacion in localizaciones" v-bind:value="localizacion.id">
+                        ${ localizacion.mensaje }
+                      </option>
+                    </select>
+                    <label for="estacion_body">Imagen</label>
+                    <input type="text" class="form-control" id="imagen" placeholder="Imagen" v-model="currentEstacion.imagen" required="required" >
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
@@ -143,7 +138,6 @@
                estaciontotipopista: [],
                loading: false,
                currentEstacion: {},
-               currentEstacionToTipoPista: [],
                csrfToken : null,
                test: "",
                message: null,
@@ -152,7 +146,6 @@
             mounted: function() {
             this.getEstaciones();
             this.getLocalizaciones();
-            this.getEstacionToTipoPista();
             },
             methods: {
                 getEstaciones: function() {
@@ -170,39 +163,22 @@
                       })
              },
               getLocalizaciones: function() {
-                    this.loading = true;
-                    axios.get('http://127.0.0.1:8000/main/api/localizacion/')
-                    .then((response) => {
-                        this.localizaciones = response.data;
-                        this.loading = false;
-                      }).catch((err) => {
-                       this.loading = false;
-                       console.log(err);
-                      })
+                this.loading = true;
+                axios.get('http://127.0.0.1:8000/main/api/localizacion/')
+                   .then((response) => {
+                      this.localizaciones = response.data;
+                      this.loading = false;
+                    }).catch((err) => {
+                      this.loading = false;
+                      console.log(err);
+                    })
              },
-              getEstacionToTipoPista: function() {
-                    this.loading = true;
-                    axios.get('http://127.0.0.1:8000/main/api/estaciontotipopista/')
-                    .then((response) => {
-                        this.estaciontotipopista = response.data;
-                        this.loading = false;
-                      }).catch((err) => {
-                       this.loading = false;
-                       console.log(err);
-                      })
-             },
-                 getEstacion: function(id) {
+              getEstacion: function(id) {
                   this.loading = true;
-                  this.currentEstacionToTipoPista = [];
                   axios.get('http://127.0.0.1:8000/main/api/estacion/'+id)
                       .then((response) => {
                         this.currentEstacion = response.data;
                         this.loading = false;
-                        for (var i = 0; i < this.estaciontotipopista.length; i++) {
-                          if (this.currentEstacion.id === this.estaciontotipopista[i].estacion) {
-                            this.currentEstacionToTipoPista.push(this.estaciontotipopista[i]);
-                          }
-                        }
 
                         $("#editEstacionModal").modal('show');
                         })
@@ -213,6 +189,7 @@
 
              },
              addEstacion: function() {
+              this.currentEstacion = {};q
               this.loading = true;
               axios.defaults.xsrfCookieName = 'csrftoken';
               axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -238,14 +215,6 @@
                  updateEstacion: function() {
                   this.loading = true;
                   const params = new URLSearchParams();
-                  /* params.append('nombre', this.currentEstacion.nombre);
-                  params.append('kmsPista', this.currentEstacion.kmsPista);
-                  params.append('numeroRemontes', this.currentEstacion.numeroRemontes);
-                  params.append('alturaMaxima', this.currentEstacion.alturaMaxima);
-                  params.append('alturaMinima', this.currentEstacion.alturaMinima);
-                  params.append('localizacion', this.currentEstacion.localizacion);
-                  params.append('imagen', this.currentEstacion.imagen);
-                  params.append('csrfmiddlewaretoken', {{ csrf_token }}); */
                   axios.defaults.xsrfCookieName = 'csrftoken';
                   axios.defaults.xsrfHeaderName = 'X-CSRFToken';
                   axios.put('http://127.0.0.1:8000/main/api/estacion/'+this.currentEstacion.id+'/', {
@@ -262,7 +231,7 @@
                         this.currentEstacion = response.data;
                         this.getEstaciones();
                         $("#editEstacionModal").modal('hide');
-                        this.currentEstacion = [];
+                        this.currentEstacion = {};
                       })
                       .catch((err) => {
                         this.loading = false;

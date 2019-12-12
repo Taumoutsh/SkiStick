@@ -14,6 +14,6 @@ urlpatterns = [
     path('tipopista/<id_tipoPista>', views.tipopista, name='tipopista'),
     path('cuento/', include('django.contrib.auth.urls')),
     path('cuento/signin/', views.signin, name='signin'),
-    path('api/estaciones/',views.gestionEstacion, name='gestionEstacion'),
+    path('admin/estaciones/',views.gestionEstacion, name='gestionEstacion'),
     path('api/', include(router.urls)),
 ]

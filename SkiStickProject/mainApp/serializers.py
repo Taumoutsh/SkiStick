@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Estacion, Localizacion, EstacionToUsuario
-from .models import EstacionToTipoPista
 
 class EstacionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,11 +9,6 @@ class EstacionSerializer(serializers.ModelSerializer):
 class LocalizacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Localizacion
-        fields = '__all__'
-
-class EstacionToTipoPistaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EstacionToTipoPista
         fields = '__all__'
 
 class EstacionToUsuarioSerializer(serializers.ModelSerializer):
